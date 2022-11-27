@@ -35,7 +35,7 @@ const quotes = [
 
 function getQuoteById(id) {
   // Return single object quote
-  return quotes.filter(quote => quote.id == id)[0] || {}
+  return quotes.filter(quote => quote.id == id)[0] || {};
 }
 
 
