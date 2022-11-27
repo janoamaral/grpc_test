@@ -2,7 +2,7 @@ syntax = "proto3";
 
 service QuoteService {
   rpc Get (Empty) returns (QuoteList) {}
-  rpc GetById (QuoteId) returns (Quote) {}
+  rpc GetOne (QuoteId) returns (Quote) {}
 }
 
 message Empty {}
