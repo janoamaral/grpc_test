@@ -33,6 +33,13 @@ const quotes = [
   },
 ]
 
+function getQuoteById(id) {
+  // Return single object quote
+  return quotes.filter(quote => quote.id == id)[0] || {}
+}
+
+
+
 
 // Add REST routes
 app.get('/api/quotes/', (req, res) => {
@@ -43,11 +50,8 @@ app.get('/api/quotes/:id', (req, res) => {
   res.json(getQuoteById(req.params.id))
 })
 
-function getQuoteById(id) {
-  // Return single object quote
-  return quotes.filter(quote => quote.id == id)[0] || {}
-}
 
+// gRPC services setup
 let pkgDefinition = protoLoader.loadSync(
   "./src/grpc/protos/quotes.proto",
   {
@@ -58,11 +62,12 @@ let pkgDefinition = protoLoader.loadSync(
     defaults: true,
     oneofs: true
   })
-let quotesProto = grpc.loadPackageDefinition(pkgDefinition);
 
+let quotesProto = grpc.loadPackageDefinition(pkgDefinition);
 
 const gRpcServer = new grpc.Server();
 
+// Add gRPC services
 gRpcServer.addService(quotesProto.QuoteService.service, {
   get: (_, callback) => {
     callback(null, { quotes })

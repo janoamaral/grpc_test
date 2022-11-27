@@ -5,9 +5,10 @@ A gRPC node client / server test
 
 ## Endpoints
 
-Server
+Server 
 
-http://localhost:3000/
+- REST http://localhost:3000/
+- GRPC http://localhost:5000/
 
 Client
 
