@@ -24,24 +24,26 @@ const client = new QuoteService(
 )
 
 
-app.get('/api/grpc/quotes/', (req, res) => {
+app.get('/api/grpc/quotes/', (req, res, next) => {
   client.get(null, (err, data) => {
     if (err) {
-      return res.status(err.code).send(err.details)
+      res.status(err.code).send(err.details)
+      return next()
     }
 
     return res.send(data)
   })
 })
 
-app.get('/api/grpc/quotes/:id', (req, res) => {
-  res.json(client.getOne(req.params.id, (err, data) => {
+app.get('/api/grpc/quotes/:id', (req, res, next) => {
+  client.getOne({ id: parseInt(req.params.id) }, (err, data) => {
     if (err) {
-      return res.status(err.code).send(err.details)
+      res.send(err)
+      return next()
     }
 
     res.json(data)
-  }))
+  })
 })
 
 app.listen(REST_PORT, () => {
