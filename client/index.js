@@ -28,12 +28,14 @@ const client = new QuoteService(
 
 // gRPC endpoints
 app.get('/api/grpc/quotes/', (req, res, next) => {
+  console.time("Get gRPC quotes")
   client.get(null, (err, data) => {
     if (err) {
       res.status(err.code).send(err.details)
       return next()
     }
 
+    console.timeEnd("Get gRPC quotes")
     return res.json(data)
   })
 })
@@ -53,8 +55,10 @@ app.get('/api/grpc/quotes/:id', (req, res, next) => {
 
 // REST endpoints
 app.get('/api/rest/quotes/', (req, res, next) => {
+  console.time("Get REST quotes")
   axios.get(`${SERVER_URL}/api/quotes/`)
     .then((data) => {
+      console.timeEnd("Get REST quotes")
       res.json({ quotes: data.data });
     })
     .catch(err => {
