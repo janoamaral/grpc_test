@@ -31,7 +31,7 @@ app.get('/api/grpc/quotes/', (req, res, next) => {
       return next()
     }
 
-    return res.send(data)
+    return res.json(data)
   })
 })
 
